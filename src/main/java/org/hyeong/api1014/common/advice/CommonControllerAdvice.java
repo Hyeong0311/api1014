@@ -1,11 +1,13 @@
 package org.hyeong.api1014.common.advice;
 
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.hyeong.api1014.common.exception.TaskException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +17,7 @@ import java.util.Map;
 public class CommonControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,Object>> handle(MethodArgumentNotValidException ex){
+    public ResponseEntity<java.util.Map<String,Object>> handle(MethodArgumentNotValidException ex){
 
         BindingResult bindingResult = ex.getBindingResult();
 
@@ -33,4 +35,13 @@ public class CommonControllerAdvice {
         return ResponseEntity.status(400).body(map);
 
     }
+
+    @ExceptionHandler(TaskException.class)
+    public ResponseEntity<String> handle(TaskException ex){
+
+        return ResponseEntity.status(ex.getCode()).body(ex.getMessage());
+
+    }
+
+
 }
