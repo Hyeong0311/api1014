@@ -16,8 +16,13 @@ public class JWYCheckFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        log.info("-------------------------------------");
+        log.info("--------------------------------------");
         log.info("shouldNotFilter!!!");
+
+        String uri = request.getRequestURI();
+
+        if(uri.equals("/api/v1/member/makeToken")) return true;
+
         return false;
     }
 
@@ -26,7 +31,7 @@ public class JWYCheckFilter extends OncePerRequestFilter {
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        log.info("-------------------------------------");
+        log.info("++++++++++++++++++++++++++++++++++++++++++");
         log.info("doFilterInternal!!!");
 
         filterChain.doFilter(request, response);
