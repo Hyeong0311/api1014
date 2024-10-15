@@ -1,4 +1,4 @@
-package org.hyeong.api1014.category.controller.advice;
+package org.hyeong.api1014.common.advice;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 @Log4j2
-public class CategoryControllerAdvice {
+public class CommonControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,Object>> handle(MethodArgumentNotValidException ex){

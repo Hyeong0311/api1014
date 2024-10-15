@@ -15,11 +15,11 @@ import lombok.experimental.SuperBuilder;
 public class PageRequestDTO {
 
     @Builder.Default
-    @Min(value = 1, message = "over 1")
+    @Min(value = 1, message = "over 1 asf")
     private int page = 1;
 
     @Builder.Default
-    @Min(value = 10, message = "set over 10")
-    @Max(value = 100, message = "cannot over 100")
+    @Min(value = 10, message = "set over qwer 10")
+    @Max(value = 100, message = "cannot over qwre 100")
     private int size = 10;
 }
