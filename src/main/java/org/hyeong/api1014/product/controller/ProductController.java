@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class ProductController {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(("permitAll()"))
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("list")
     public ResponseEntity<PageResponseDTO<ProductListDTO>> list(
             @Validated PageRequestDTO pageRequestDTO
