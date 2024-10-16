@@ -20,7 +20,7 @@ import static java.lang.System.out;
 
 @Log4j2
 @RequiredArgsConstructor
-public class JWYCheckFilter extends OncePerRequestFilter {
+public class JWTCheckFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
 

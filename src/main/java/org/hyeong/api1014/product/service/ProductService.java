@@ -2,13 +2,13 @@ package org.hyeong.api1014.product.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.hyeong.api1014.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.hyeong.api1014.common.dto.PageRequestDTO;
 import org.hyeong.api1014.common.dto.PageResponseDTO;
 import org.hyeong.api1014.common.exception.CommonExceptions;
 import org.hyeong.api1014.product.dto.ProductListDTO;
+import org.hyeong.api1014.product.repository.ProductRepository;
 
 @Service
 @Transactional
@@ -24,7 +24,7 @@ public class ProductService {
             throw CommonExceptions.LIST_ERROR.get();
         }
 
-        return productRepository.listByCno(0L, pageRequestDTO);
+        return productRepository.listByCno(1L, pageRequestDTO);
     }
 
 }
