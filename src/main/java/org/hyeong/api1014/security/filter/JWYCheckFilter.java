@@ -1,6 +1,7 @@
 package org.hyeong.api1014.security.filter;
 
 import com.google.gson.Gson;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -64,7 +65,10 @@ public class JWYCheckFilter extends OncePerRequestFilter {
 
             Map<String, Object> claims = jwtUtil.validateToken(token);
             log.info(claims);
-        }catch(Exception e){
+        }catch(JwtException e){
+
+            log.info(e.getMessage());
+            log.info("111111111111111111111111111");
 
             e.printStackTrace();
         }
