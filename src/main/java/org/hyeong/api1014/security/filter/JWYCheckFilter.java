@@ -68,6 +68,7 @@ public class JWYCheckFilter extends OncePerRequestFilter {
         try{
 
             Writer writer = response.getWriter();
+
             out.println(jsonStr);
             out.close();
         }catch(IOException e) {
