@@ -8,11 +8,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hyeong.api1014.security.auth.CustomUserPrincipal;
 import org.hyeong.api1014.security.util.JWTUtil;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import static java.lang.System.out;
@@ -66,6 +73,17 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             Map<String, Object> claims = jwtUtil.validateToken(token);
             log.info(claims);
 
+            String email = (String) claims.get("email");
+            String role = (String) claims.get("role");
+
+            Principal userPrincipal = new CustomUserPrincipal(email);
+
+            UsernamePasswordAuthenticationToken authenticationToken
+                    = new UsernamePasswordAuthenticationToken(userPrincipal, null,
+                    List.of(new SimpleGrantedAuthority("ROLE_"+role)));
+
+            SecurityContext context = SecurityContextHolder.getContext();
+            context.setAuthentication(authenticationToken);
 
             filterChain.doFilter(request, response);
         }catch(JwtException e){
