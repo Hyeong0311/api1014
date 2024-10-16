@@ -32,7 +32,7 @@ public class JWYCheckFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         log.info("++++++++++++++++++++++++++++++++++++++++++");
-        log.info("doFilterInternal!!!");
+        log.info("doFilterInternal!!! 다음 단계로 넘어감");
 
         filterChain.doFilter(request, response);
     }
