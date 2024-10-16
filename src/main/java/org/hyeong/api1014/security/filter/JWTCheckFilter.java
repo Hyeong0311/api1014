@@ -84,6 +84,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }
     }
 
+
     private void makeError(HttpServletResponse response, Map<String, Object> map) {
 
         Gson gson = new Gson();
