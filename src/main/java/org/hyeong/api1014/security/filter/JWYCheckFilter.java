@@ -5,7 +5,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hyeong.api1014.security.util.JWTUtil;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -16,7 +18,10 @@ import static java.lang.System.out;
 
 
 @Log4j2
+@RequiredArgsConstructor
 public class JWYCheckFilter extends OncePerRequestFilter {
+
+    private final JWTUtil jwtUtil;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -52,6 +57,15 @@ public class JWYCheckFilter extends OncePerRequestFilter {
             makeError(response, Map.of("status", 401, "msg", "No Access Token"));
 
             return;
+        }
+
+        //JWT validate
+        try{
+
+            Map<String, Object> claims = jwtUtil.validateToken(token);
+        }catch(Exception e){
+
+            e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);

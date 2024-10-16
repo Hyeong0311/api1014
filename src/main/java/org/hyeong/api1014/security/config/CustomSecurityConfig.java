@@ -1,6 +1,7 @@
 package org.hyeong.api1014.security.config;
 
 import org.hyeong.api1014.security.filter.JWYCheckFilter;
+import org.hyeong.api1014.security.util.JWTUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,6 +15,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class CustomSecurityConfig {
+
+    @Bean
+    public JWTUtil jwtUtil() {
+
+        return new JWTUtil();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,7 +42,7 @@ public class CustomSecurityConfig {
 
         http.csrf(config -> config.disable());
 
-        http.addFilterBefore(new JWYCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWYCheckFilter(jwtUtil()), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
