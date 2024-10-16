@@ -1,5 +1,8 @@
 package org.hyeong.api1014.member.exception;
 
+import lombok.Data;
+
+@Data
 public class MemberTaskException extends RuntimeException {
 
     private int status;
