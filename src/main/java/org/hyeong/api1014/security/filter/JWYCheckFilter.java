@@ -74,8 +74,11 @@ public class JWYCheckFilter extends OncePerRequestFilter {
             log.info(e.getMessage());
             log.info("111111111111111111111111111");
 
+            String classFullName = e.getClass().getName();
+            String shortClassName = classFullName.substring(classFullName.lastIndexOf(".") + 1);
+
             makeError(response,
-                    Map.of("status", 401, "msg", e.getClass().getName()));
+                    Map.of("status", 401, "msg", shortClassName));
 
             e.printStackTrace();
         }
