@@ -63,6 +63,7 @@ public class JWYCheckFilter extends OncePerRequestFilter {
         try{
 
             Map<String, Object> claims = jwtUtil.validateToken(token);
+            log.info(claims);
         }catch(Exception e){
 
             e.printStackTrace();
