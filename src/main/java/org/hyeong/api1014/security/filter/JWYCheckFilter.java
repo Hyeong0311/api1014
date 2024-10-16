@@ -65,15 +65,20 @@ public class JWYCheckFilter extends OncePerRequestFilter {
 
             Map<String, Object> claims = jwtUtil.validateToken(token);
             log.info(claims);
+
+
+            filterChain.doFilter(request, response);
         }catch(JwtException e){
 
+            log.info(e.getClass().getName());
             log.info(e.getMessage());
             log.info("111111111111111111111111111");
 
+            makeError(response,
+                    Map.of("status", 401, "msg", e.getClass().getName()));
+
             e.printStackTrace();
         }
-
-        filterChain.doFilter(request, response);
     }
 
     private void makeError(HttpServletResponse response, Map<String, Object> map) {
