@@ -34,6 +34,15 @@ public class JWYCheckFilter extends OncePerRequestFilter {
         log.info("++++++++++++++++++++++++++++++++++++++++++");
         log.info("doFilterInternal!!! 다음 단계로 넘어감");
 
+        log.info(request.getRequestURI());
+
+        String authHeader = request.getHeader("Authorization");
+
+        String token = null;
+        if(authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+        }
+
         filterChain.doFilter(request, response);
     }
 }
