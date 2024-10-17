@@ -1,9 +1,11 @@
 package org.hyeong.api1014.member.controller;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.log4j.Log4j2;
 import org.hyeong.api1014.member.dto.MemberDTO;
 import org.hyeong.api1014.member.dto.TokenRequestDTO;
 import org.hyeong.api1014.member.dto.TokenResponseDTO;
+import org.hyeong.api1014.member.exception.MemberExceptions;
 import org.hyeong.api1014.member.service.MemberService;
 import org.hyeong.api1014.security.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,8 +68,37 @@ public class MemberController {
             @RequestHeader("Authorization") String accessToken, String refreshToken) {
 
         //만약 accessToken 이 없다면 혹은 refreshToken 이 없다면
+        if(accessToken == null || refreshToken == null) {
+            throw MemberExceptions.TOKEN_NOT_ENOUGH.get();
+        }
 
         //accessToken 에서 Bearer(공백포함 7) 잘라낼 때 문제가 발생한다면
+        if(accessToken.startsWith("Bearer ")) {
+            throw MemberExceptions.ACCESSTOKEN_TOO_SHORT.get();
+        }
+
+        String accessTokenStr = accessToken.substring("Bearer ".length());
+
+        //AccessToken 의 만료 여부 체크
+        try{
+
+            Map<String, Object> payload = jwtUtil.validateToken(accessTokenStr);
+
+            String email = payload.get("email").toString();
+
+            TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
+            tokenResponseDTO.setAccessToken(accessTokenStr);
+            tokenResponseDTO.setEmail(email);
+            tokenResponseDTO.setRefreshToken(refreshToken);
+
+            return ResponseEntity.ok(tokenResponseDTO);
+        }catch(ExpiredJwtException ex){
+
+            //정상적으로 만료된 경우
+
+            //만약 RefreshToken 까지 만료되었다면
+
+        }
 
         return null;
     }

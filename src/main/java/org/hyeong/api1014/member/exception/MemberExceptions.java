@@ -2,7 +2,9 @@ package org.hyeong.api1014.member.exception;
 
 public enum MemberExceptions {
 
-    BAD_AUTH(400, "ID/PW incorrect");
+    BAD_AUTH(400, "ID/PW incorrect"),
+    TOKEN_NOT_ENOUGH(401, "More Tokens requeired"),
+    ACCESSTOKEN_TOO_SHORT(401, "Access Token Too short");
 
     private MemberTaskException exception;
 
