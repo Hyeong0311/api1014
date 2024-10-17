@@ -127,7 +127,5 @@ public class MemberController {
                 throw MemberExceptions.REQUIRE_SIGN_IN.get();
             }
         }
-
-        //return null;
     }
 }
