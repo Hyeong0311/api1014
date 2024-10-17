@@ -30,6 +30,9 @@ public class MemberController {
     @Value("${org.zerock.refreshTime}")
     private int refreshTime;
 
+    @Value("${org.zerock.alwaysNew}")
+    private boolean alwaysNew;
+
     public MemberController(MemberService memberService, JWTUtil jwtUtil) {
         this.memberService = memberService;
         this.jwtUtil = jwtUtil;
@@ -97,7 +100,17 @@ public class MemberController {
             //정상적으로 만료된 경우
 
             //만약 RefreshToken 까지 만료되었다면
+            try {
 
+                Map<String, Object> payload = jwtUtil.validateToken(refreshToken);
+
+                if(alwaysNew){
+
+                }
+            }catch(ExpiredJwtException ex2) {
+
+                throw MemberExceptions.REQUIRE_SIGN_IN.get();
+            }
         }
 
         return null;

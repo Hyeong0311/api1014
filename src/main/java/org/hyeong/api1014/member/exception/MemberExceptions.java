@@ -4,7 +4,8 @@ public enum MemberExceptions {
 
     BAD_AUTH(400, "ID/PW incorrect"),
     TOKEN_NOT_ENOUGH(401, "More Tokens requeired"),
-    ACCESSTOKEN_TOO_SHORT(401, "Access Token Too short");
+    ACCESSTOKEN_TOO_SHORT(401, "Access Token Too short"),
+    REQUIRE_SIGN_IN(401, "Require sign in");
 
     private MemberTaskException exception;
 
