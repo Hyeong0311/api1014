@@ -104,15 +104,30 @@ public class MemberController {
 
                 Map<String, Object> payload = jwtUtil.validateToken(refreshToken);
 
+                String email = payload.get("email").toString();
+                String role = payload.get("role").toString();
+                String newAccessToken = null;
+                String newRefreshToken = null;
+
                 if(alwaysNew){
 
+                    Map<String, Object> claimMap = Map.of("email", email, "role", role);
+                    newAccessToken = jwtUtil.createToken(claimMap, accessTime);
+                    newRefreshToken = jwtUtil.createToken(claimMap, refreshTime);
                 }
+
+                TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
+                tokenResponseDTO.setAccessToken(newAccessToken);
+                tokenResponseDTO.setRefreshToken(newRefreshToken);
+                tokenResponseDTO.setEmail(email);
+
+                return ResponseEntity.ok(tokenResponseDTO);
             }catch(ExpiredJwtException ex2) {
 
                 throw MemberExceptions.REQUIRE_SIGN_IN.get();
             }
         }
 
-        return null;
+        //return null;
     }
 }
