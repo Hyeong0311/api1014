@@ -30,6 +30,8 @@ spring:
 
 org:
   zerock:
+    accessTime: 60
+    refreshTime: 10080
     upload:
       path: upload
 

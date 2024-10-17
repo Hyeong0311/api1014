@@ -6,6 +6,7 @@ import org.hyeong.api1014.member.dto.TokenRequestDTO;
 import org.hyeong.api1014.member.dto.TokenResponseDTO;
 import org.hyeong.api1014.member.service.MemberService;
 import org.hyeong.api1014.security.util.JWTUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +22,13 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
-
     private final JWTUtil jwtUtil;
+
+    @Value("${org.zerock.accessTime}")
+    private int accessTime;
+
+    @Value("${org.zerock.refreshTime}")
+    private int refreshTime;
 
     public MemberController(MemberService memberService, JWTUtil jwtUtil) {
         this.memberService = memberService;
@@ -44,8 +50,8 @@ public class MemberController {
         Map<String, Object> claimMap =
                 Map.of("email", memberDTO.getEmail(), "role", memberDTO.getRole());
 
-        String accessToken = jwtUtil.createToken(claimMap, 30);
-        String refreshToken = jwtUtil.createToken(claimMap, 360);
+        String accessToken = jwtUtil.createToken(claimMap, accessTime);
+        String refreshToken = jwtUtil.createToken(claimMap, refreshTime);
 
         TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
         tokenResponseDTO.setAccessToken(accessToken);
