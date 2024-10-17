@@ -30,7 +30,7 @@ spring:
 
 org:
   zerock:
-    accessTime: 60
+    accessTime: 1
     refreshTime: 10080
     alwaysNew: true
     upload:

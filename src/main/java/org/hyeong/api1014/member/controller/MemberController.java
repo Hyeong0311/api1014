@@ -76,7 +76,7 @@ public class MemberController {
         }
 
         //accessToken 에서 Bearer(공백포함 7) 잘라낼 때 문제가 발생한다면
-        if(accessToken.startsWith("Bearer ")) {
+        if(!accessToken.startsWith("Bearer ")) {
             throw MemberExceptions.ACCESSTOKEN_TOO_SHORT.get();
         }
 
