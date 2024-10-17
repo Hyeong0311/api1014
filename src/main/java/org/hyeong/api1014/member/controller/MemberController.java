@@ -7,12 +7,10 @@ import org.hyeong.api1014.member.dto.TokenResponseDTO;
 import org.hyeong.api1014.member.service.MemberService;
 import org.hyeong.api1014.security.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -59,5 +57,18 @@ public class MemberController {
         tokenResponseDTO.setEmail(memberDTO.getEmail());
 
         return ResponseEntity.ok(tokenResponseDTO);
+    }
+
+    @PostMapping(value ="refreshToken",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TokenResponseDTO> refreshToken(
+            @RequestHeader("Authorization") String accessToken, String refreshToken) {
+
+        //만약 accessToken 이 없다면 혹은 refreshToken 이 없다면
+
+        //accessToken 에서 Bearer(공백포함 7) 잘라낼 때 문제가 발생한다면
+
+        return null;
     }
 }
