@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Map;
 
 @RestController
@@ -128,5 +129,15 @@ public class MemberController {
                 throw MemberExceptions.REQUIRE_SIGN_IN.get();
             }
         }
+    }
+
+    @RequestMapping("kakao")
+    public ResponseEntity<TokenResponseDTO> kakaoToken(String accessToken) {
+
+        log.info("kakao access token: " + accessToken);
+
+        memberService.authKakao(accessToken);
+
+        return null;
     }
 }
